@@ -13,7 +13,6 @@
 * Google map
 
 ## Dépendances
-* ReferencementBundle
 * GlobalBundle
 * SweetAlert
 

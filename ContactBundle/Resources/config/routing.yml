@@ -1,3 +1,36 @@
-contact_homepage:
-    path:     /
-    defaults: { _controller: ContactBundle:Default:index }
+admin_contact_manager:
+    path:     /admin/contact/gestion
+    defaults: { _controller: ContactBundle:Contact:managerAdmin }
+
+admin_contact_supprimer:
+    path:     /admin/contact/supprimer/{id}
+    defaults: { _controller: ContactBundle:Contact:supprimerAdmin }
+    requirements:
+        id: \d+
+
+client_contact_form:
+    path:     /contact
+    defaults: { _controller: ContactBundle:Contact:ajouterClient }
+
+#Objet
+admin_contactobjet_manager:
+    path:     /admin/contact-objet/manager
+    defaults: { _controller: ContactBundle:Objet:managerAdmin }
+
+admin_contactobjet_ajouter:
+    path:     /admin/contact-objet/ajouter
+    defaults: { _controller: ContactBundle:Objet:ajouterAdmin }
+
+admin_contactobjet_modifier:
+    path:     /admin/contact-objet/modifier/{id}
+    defaults: { _controller: ContactBundle:Objet:modifierAdmin }
+    requirements:
+        id: \d+
+
+admin_contactobjet_supprimer:
+    path:     /admin/contact-objet/supprimer/{id}
+    defaults: { _controller: ContactBundle:Objet:supprimerAdmin }
+    requirements:
+        id: \d+
+
+

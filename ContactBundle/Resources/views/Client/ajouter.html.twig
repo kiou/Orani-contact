@@ -1,0 +1,44 @@
+{% extends "GlobalBundle:Client/Layout:layout.html.twig" %}
+
+{% block metaTitle %}Meta title{% endblock %}
+{% block metaDescription %}Meta description{% endblock %}
+
+{% block contentitle %}
+    <h1>Contact</h1>
+{% endblock %}
+
+{% block content %}
+
+    {{ form_start(form, {'attr': {'class': 'form-horizontal', novalidate: 'novalidate'}}) }}
+
+        {{ form_errors(form) }}
+
+        {{ form_label(form.nom, "Nom *") }}
+        {{ form_errors(form.nom) }}
+        {{ form_widget(form.nom, {'attr': {'class': 'form-elem big'}}) }}
+
+        {{ form_label(form.prenom, "Prénom *") }}
+        {{ form_errors(form.prenom) }}
+        {{ form_widget(form.prenom, {'attr': {'class': 'form-elem big'}}) }}
+
+        {{ form_label(form.email, "Email *") }}
+        {{ form_errors(form.email) }}
+        {{ form_widget(form.email, {'attr': {'class': 'form-elem big'}}) }}
+
+        {{ form_label(form.objet, "Objet *") }}
+        {{ form_errors(form.objet) }}
+        {{ form_widget(form.objet, {'attr': {'class': 'form-elem big'}}) }}
+
+        {{ form_label(form.message, "Message *") }}
+        {{ form_errors(form.message) }}
+        {{ form_widget(form.message, {'attr': {'class': 'form-elem big'}}) }}
+
+        <br>
+
+        {{ form_widget(form.Enregistrer, { 'label': 'Nous contacter' }) }}
+
+        {{ form_rest(form) }}
+
+    {{ form_end(form) }}
+
+{% endblock %}
