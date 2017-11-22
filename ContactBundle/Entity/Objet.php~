@@ -49,7 +49,7 @@ class Objet
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255)
+     * @ORM\Column(name="email", type="text")
      * @Assert\NotBlank(message="Compléter le champ email")
      * @Assert\Email(message="Le format de l'email n'est pas bon ex : xyz@exemple.fr")
      */
@@ -179,5 +179,38 @@ class Objet
     {
         return $this->email;
     }
-}
 
+    /**
+     * Add contact
+     *
+     * @param \ContactBundle\Entity\Contact $contact
+     *
+     * @return Objet
+     */
+    public function addContact(\ContactBundle\Entity\Contact $contact)
+    {
+        $this->contacts[] = $contact;
+
+        return $this;
+    }
+
+    /**
+     * Remove contact
+     *
+     * @param \ContactBundle\Entity\Contact $contact
+     */
+    public function removeContact(\ContactBundle\Entity\Contact $contact)
+    {
+        $this->contacts->removeElement($contact);
+    }
+
+    /**
+     * Get contacts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getContacts()
+    {
+        return $this->contacts;
+    }
+}

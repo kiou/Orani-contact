@@ -16,9 +16,13 @@
 		{{ form_errors(form.nom) }}
 		{{ form_widget(form.nom, {'attr': {'class': 'form-elem big'}}) }}
 
-        {{ form_label(form.email, "Email *") }}
+        {{ form_label(form.email, "Email(s) *") }}
         {{ form_errors(form.email) }}
         {{ form_widget(form.email, {'attr': {'class': 'form-elem big'}}) }}
+		<div class="form-legende">
+			Si vous souhaitez utiliser plusieurs adresses email<br>
+			séparez les avec un point virgule ";"
+		</div>
 
 		{{ form_rest(form) }}
 

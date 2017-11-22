@@ -49,7 +49,7 @@ class Objet
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255)
+     * @ORM\Column(name="email", type="text")
      * @Assert\NotBlank(message="Compléter le champ email")
      * @Assert\Email(message="Le format de l'email n'est pas bon ex : xyz@exemple.fr")
      */

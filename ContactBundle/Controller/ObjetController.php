@@ -54,4 +54,39 @@ class ObjetController extends Controller
         return $this->redirect($this->generateUrl('admin_contactobjet_manager'));
     }
 
+
+    /**
+     * Modifier
+     */
+    public function modifierAdminAction(Request $request, Objet $objet)
+    {
+        $form = $this->get('form.factory')->create(ObjetType::class, $objet);
+
+        /* Récéption du formulaire */
+        if ($form->handleRequest($request)->isValid()){
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($objet);
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add('succes', 'Objet enregistré avec succès');
+            return $this->redirect($this->generateUrl('admin_contactobjet_manager'));
+        }
+
+        /* BreadCrumb */
+        $breadcrumb = array(
+            'Accueil' => $this->generateUrl('admin_page_index'),
+            'Gestion des objets' => $this->generateUrl('admin_contactobjet_manager'),
+            'Modifier un objet' => ''
+        );
+
+        return $this->render('ContactBundle:Admin/Objet:modifier.html.twig',
+            array(
+                'breadcrumb' => $breadcrumb,
+                'objet' => $objet,
+                'form' => $form->createView()
+            )
+        );
+
+    }
+
 }

@@ -10,4 +10,20 @@ namespace ContactBundle\Repository;
  */
 class ContactRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getAllContacts($objet)
+    {
+        $qb = $this->createQueryBuilder('c');
+
+        /**
+         * recherche via l'objet
+         */
+        if(!empty($objet)){
+            $qb->andWhere('c.objet = :objet')
+               ->setParameter('objet', $objet);
+        }
+
+        $qb->orderBy('c.id', 'DESC');
+
+        return $query = $qb->getQuery()->getResult();
+    }
 }

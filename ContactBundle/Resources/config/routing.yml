@@ -8,6 +8,12 @@ admin_contact_supprimer:
     requirements:
         id: \d+
 
+admin_contact_view:
+    path:     /admin/contact/{id}
+    defaults: { _controller: ContactBundle:Contact:viewAdmin }
+    requirements:
+        id: \d+
+
 client_contact_form:
     path:     /contact
     defaults: { _controller: ContactBundle:Contact:ajouterClient }

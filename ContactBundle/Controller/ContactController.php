@@ -24,6 +24,25 @@ class ContactController extends Controller
             $em->persist($contact);
             $em->flush();
 
+            /* Notification */
+            $emails = explode(';',$contact->getObjet()->getEmail());
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Formulaire de contact')
+                ->setFrom('contact@colocarts.com')
+                ->setTo($emails)
+                ->setBody(
+                    $this->renderView('GlobalBundle:Mail:simple.html.twig', array(
+                            'titre' => 'Formulaire de contact',
+                            'contenu' => '<strong>Nom: </strong>'.$contact->getNom().'<br><strong>Prénom: </strong>'.$contact->getPrenom().'<br><strong>Email: </strong>'.$contact->getEmail().'<br><strong>Objet: </strong>'.$contact->getObjet()->getNom().'<br><strong>Message: </strong><br>'.$contact->getMessage()
+                        )
+                    ),
+                    'text/html'
+                );
+
+            /* Envoyer le message */
+            $this->get('mailer')->send($message);
+
             $request->getSession()->getFlashBag()->add('succes', 'Votre demande de contact à bien été prise en compte');
             return $this->redirect($this->generateUrl('client_page_index'));
         }
@@ -34,5 +53,61 @@ class ContactController extends Controller
             )
         );
 
+    }
+
+    /**
+     * Gestion
+     */
+    public function managerAdminAction(Request $request)
+    {
+        /* Services */
+        $rechercheService = $this->get('recherche.service');
+        $recherches = $rechercheService->setRecherche('conact_manager', array(
+                'objet',
+            )
+        );
+
+        /* La liste des objets */
+        $objets = $this->getDoctrine()
+                       ->getRepository('ContactBundle:Objet')
+                       ->findBy(array(),array('id' => 'DESC'));
+
+        /* La liste des contact */
+        $contacts = $this->getDoctrine()
+                         ->getRepository('ContactBundle:Contact')
+                         ->getAllContacts($recherches['objet']);
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $contacts, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            50/*limit per page*/
+        );
+
+        return $this->render('ContactBundle:Admin:manager.html.twig',array(
+                'pagination' => $pagination,
+                'objets' => $objets,
+                'recherches' => $recherches
+            )
+        );
+    }
+
+    /*
+     * View
+     */
+    public function viewAdminAction(Contact $contact)
+    {
+        /* BreadCrumb */
+        $breadcrumb = array(
+            'Accueil' => $this->generateUrl('admin_page_index'),
+            'Gestion des contacts' => $this->generateUrl('admin_contact_manager'),
+            'Afficher un contact' => ''
+        );
+
+        return $this->render( 'ContactBundle:Admin:view.html.twig',array(
+                'contact' => $contact,
+                'breadcrumb' => $breadcrumb
+            )
+        );
     }
 }

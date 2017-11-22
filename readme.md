@@ -2,14 +2,14 @@
 * Gestion des contacts
 * Afficher un contact
 * Supprimer un contact
-* Ajouter un sujet
-* Gestion des sujets
-* Modifier un sujet
-* Supprimer un sujet
+* Ajouter un objet
+* Gestion des objets
+* Modifier un objet
+* Supprimer un objet
 
 ## Client
 * Formulaire de contact
-* Notification mail
+* Notification mail (multiple)
 * Google map
 
 ## Dépendances
@@ -19,11 +19,20 @@
 ## Installation
 
 ### Menu
+```twig
+{% set menuContact = ['admin_contact_manager','admin_contact_view','admin_contactobjet_manager', 'admin_contactobjet_ajouter', 'admin_contactobjet_modifier'] %}
+
+<a href="#" data-nav="contac-menu" class="menuNav {{ getCurrentMenu(menuContact) }}"> <i class="fa fa-paper-plane-o"></i> Contacts <i class="fa fa-angle-right"></i></a>
+<ul id="contac-menu" class="{{ getCurrentMenu(menuContact) }}">
+    <li class="{{ getCurrentMenu(['admin_contact_manager']) }}"><a href="{{ path('admin_contact_manager')}}">Gestion des contacts</a></li>
+    <li class="{{ getCurrentMenu(['admin_contactobjet_manager']) }}"><a href="{{ path('admin_contactobjet_manager')}}">Gestion des objets</a></li>
+</ul>
+```
 
 ### Fichier
 * app/AppKernel.php
 ```php
-new ContactBundle/ContactBundle(),
+new ContactBundle\ContactBundle(),
 ```
 * app/config.yml
 ```yml
