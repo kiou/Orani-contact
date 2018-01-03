@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use GlobalBundle\Form\Type\LangueType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ObjetType extends AbstractType
@@ -20,6 +21,7 @@ class ObjetType extends AbstractType
         $builder
             ->add('nom', TextType::class)
             ->add('email', EmailType::class)
+            ->add('langue', LangueType::class)
             ->add('Enregistrer', SubmitType::class, array(
                     'attr' => array('class' => 'form-submit turquoise medium')
                 )

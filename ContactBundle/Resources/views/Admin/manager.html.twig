@@ -5,6 +5,17 @@
 {% block content %}
 	<div id="recherche">
 		<form action="{{ path('admin_contact_manager') }}" method="post">
+            <select name="langue" class="form-elem medium">
+                <option value="">Choisir une langue</option>
+                {% for langue in langues %}
+                    {% if recherches.langue == langue.code %}
+                        <option value="{{ langue.code }}" selected>{{ langue.nom }}</option>
+                    {% else %}
+                        <option value="{{ langue.code }}">{{ langue.nom }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+
 			<select name="objet" class="form-elem medium">
 				<option value="">Choisir un objet</option>
 				{% for objet in objets %}

@@ -10,13 +10,13 @@ use Symfony\Component\HttpFoundation\Request;
 class ContactController extends Controller
 {
     /**
-     * Ajouter client
+     * Ajouter
      */
     public function ajouterClientAction(Request $request)
     {
 
         $contact = new Contact;
-        $form = $this->get('form.factory')->create(ContactType::class, $contact);
+        $form = $this->get('form.factory')->create(ContactType::class, $contact, array('langue' => $request->getLocale()));
 
         /* Récéption du formulaire */
         if ($form->handleRequest($request)->isValid()){
@@ -43,7 +43,7 @@ class ContactController extends Controller
             /* Envoyer le message */
             $this->get('mailer')->send($message);
 
-            $request->getSession()->getFlashBag()->add('succes', 'Votre demande de contact à bien été prise en compte');
+            $request->getSession()->getFlashBag()->add('succes', $this->get('translator')->trans('contact.client.validators.succes'));
             return $this->redirect($this->generateUrl('client_page_index'));
         }
 
@@ -64,6 +64,7 @@ class ContactController extends Controller
         $rechercheService = $this->get('recherche.service');
         $recherches = $rechercheService->setRecherche('conact_manager', array(
                 'objet',
+                'langue'
             )
         );
 
@@ -75,7 +76,7 @@ class ContactController extends Controller
         /* La liste des contact */
         $contacts = $this->getDoctrine()
                          ->getRepository('ContactBundle:Contact')
-                         ->getAllContacts($recherches['objet']);
+                         ->getAllContacts($recherches['objet'], $recherches['langue']);
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -84,10 +85,14 @@ class ContactController extends Controller
             50/*limit per page*/
         );
 
+        /* La liste des langues */
+        $langues = $this->getDoctrine()->getRepository('GlobalBundle:Langue')->findAll();
+
         return $this->render('ContactBundle:Admin:manager.html.twig',array(
                 'pagination' => $pagination,
                 'objets' => $objets,
-                'recherches' => $recherches
+                'recherches' => $recherches,
+                'langues' => $langues
             )
         );
     }

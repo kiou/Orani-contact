@@ -10,4 +10,22 @@ namespace ContactBundle\Repository;
  */
 class ObjetRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getAllObjets($langue, $form = false)
+    {
+        $qb = $this->createQueryBuilder('o');
+
+        /**
+         * recherche via la langue
+         */
+        if(!empty($langue)){
+            $qb->andWhere('o.langue = :langue')
+                ->setParameter('langue', $langue);
+        }
+
+        $qb->orderBy('o.id', 'DESC');
+
+        if($form) return $qb;
+
+        return $query = $qb->getQuery()->getResult();
+    }
 }

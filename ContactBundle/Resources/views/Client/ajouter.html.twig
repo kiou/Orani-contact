@@ -1,13 +1,11 @@
 {% extends "GlobalBundle:Client/Layout:layout.html.twig" %}
 
-{% block metaTitle %}Meta title{% endblock %}
-{% block metaDescription %}Meta description{% endblock %}
-
-{% block contentitle %}
-    <h1>Contact</h1>
-{% endblock %}
+{% block metaTitle %}{{ 'contact.client.metatitle'|trans }}{% endblock %}
+{% block metaDescription %}{{ 'contact.client.metadescription'|trans }}{% endblock %}
 
 {% block content %}
+
+    <h1>{{ 'contact.client.title'|trans }}</h1>
 
     <div class="contactMap">
         <p>La carte</p>
@@ -17,29 +15,31 @@
 
         {{ form_errors(form) }}
 
-        {{ form_label(form.nom, "Nom *") }}
+        {{ form_label(form.nom, 'contact.label.nom'|trans ) }}
         {{ form_errors(form.nom) }}
         {{ form_widget(form.nom, {'attr': {'class': 'form-elem big'}}) }}
 
-        {{ form_label(form.prenom, "Prénom *") }}
+        {{ form_label(form.prenom, 'contact.label.prenom'|trans ) }}
         {{ form_errors(form.prenom) }}
         {{ form_widget(form.prenom, {'attr': {'class': 'form-elem big'}}) }}
 
-        {{ form_label(form.email, "Email *") }}
+        {{ form_label(form.email, 'contact.label.email'|trans ) }}
         {{ form_errors(form.email) }}
         {{ form_widget(form.email, {'attr': {'class': 'form-elem big'}}) }}
 
-        {{ form_label(form.objet, "Objet *") }}
+        {{ form_label(form.objet, 'contact.label.objet'|trans ) }}
         {{ form_errors(form.objet) }}
         {{ form_widget(form.objet, {'attr': {'class': 'form-elem big'}}) }}
 
-        {{ form_label(form.message, "Message *") }}
+        {{ form_label(form.message, 'contact.label.message'|trans ) }}
         {{ form_errors(form.message) }}
         {{ form_widget(form.message, {'attr': {'class': 'form-elem big'}}) }}
 
+        {{ form_widget(form.langue, {'value': app.request.locale}) }}
+
         <br>
 
-        {{ form_widget(form.Enregistrer, { 'label': 'Nous contacter' }) }}
+        {{ form_widget(form.Enregistrer, { 'label': 'contact.label.submit'|trans  }) }}
 
         {{ form_rest(form) }}
 

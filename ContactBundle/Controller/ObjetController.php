@@ -9,12 +9,12 @@ use ContactBundle\Entity\Objet;
 
 class ObjetController extends Controller
 {
-
     /**
-     * Gestion
+     * Ajouter
      */
-    public function managerAdminAction(Request $request)
+    public function ajouterAdminAction(Request $request)
     {
+
         $objet = new Objet;
         $form = $this->get('form.factory')->create(ObjetType::class, $objet);
 
@@ -28,13 +28,37 @@ class ObjetController extends Controller
             return $this->redirect($this->generateUrl('admin_contactobjet_manager'));
         }
 
+        return $this->render( 'ContactBundle:Admin/Objet:ajouter.html.twig',
+            array(
+                'form' => $form->createView()
+            )
+        );
+
+    }
+
+    /**
+     * Gestion
+     */
+    public function managerAdminAction()
+    {
+        /* Services */
+        $rechercheService = $this->get('recherche.service');
+        $recherches = $rechercheService->setRecherche('contactobjet_manager', array(
+                'langue'
+            )
+        );
+
         $objets = $this->getDoctrine()
                        ->getRepository('ContactBundle:Objet')
-                       ->findBy(array(),array('id' => 'DESC'));
+                       ->getAllObjets($recherches['langue']);
+
+        /* La liste des langues */
+        $langues = $this->getDoctrine()->getRepository('GlobalBundle:Langue')->findAll();
 
         return $this->render('ContactBundle:Admin/Objet:manager.html.twig',array(
-                'form' => $form->createView(),
                 'objets' => $objets,
+                'recherches' => $recherches,
+                'langues' => $langues
             )
         );
     }
@@ -53,7 +77,6 @@ class ObjetController extends Controller
         $request->getSession()->getFlashBag()->add('succes', 'Objet supprimé avec succès');
         return $this->redirect($this->generateUrl('admin_contactobjet_manager'));
     }
-
 
     /**
      * Modifier

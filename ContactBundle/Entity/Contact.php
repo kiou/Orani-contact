@@ -42,7 +42,7 @@ class Contact
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255)
-     * @Assert\NotBlank(message="Compléter le champ nom")
+     * @Assert\NotBlank(message="contact.validators.nom")
      */
     private $nom;
 
@@ -50,7 +50,7 @@ class Contact
      * @var string
      *
      * @ORM\Column(name="prenom", type="string", length=255)
-     * @Assert\NotBlank(message="Compléter le champ prénom")
+     * @Assert\NotBlank(message="contact.validators.prenom")
      */
     private $prenom;
 
@@ -58,8 +58,8 @@ class Contact
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
-     * @Assert\NotBlank(message="Compléter le champ email")
-     * @Assert\Email(message="Le format de l'email n'est pas bon ex : xyz@exemple.fr")
+     * @Assert\NotBlank(message="contact.validators.email")
+     * @Assert\Email(message="contact.valiadtors.emailvalide")
      */
     private $email;
 
@@ -67,15 +67,23 @@ class Contact
      * @var string
      *
      * @ORM\Column(name="message", type="text")
-     * @Assert\NotBlank(message="Compléter le champ message")
+     * @Assert\NotBlank(message="contact.validators.message")
      */
     private $message;
 
     /**
      * @ORM\ManyToOne(targetEntity="ContactBundle\Entity\Objet", inversedBy="contacts")
-     * @Assert\NotBlank(message="Compléter le champ objet")
+     * @Assert\NotBlank(message="contact.validators.objet")
      */
     private $objet;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="langue", type="string", length=8)
+     * @Assert\NotBlank(message="Compléter le champ langue")
+     */
+    private $langue;
 
     public function __construct()
     {
@@ -266,5 +274,21 @@ class Contact
     public function getObjet()
     {
         return $this->objet;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLangue()
+    {
+        return $this->langue;
+    }
+
+    /**
+     * @param string $langue
+     */
+    public function setLangue($langue)
+    {
+        $this->langue = $langue;
     }
 }
