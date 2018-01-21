@@ -36,10 +36,7 @@ class ContactType extends AbstractType
                 )
             )
             ->add('message', TextareaType::class)
-            ->add('Enregistrer', SubmitType::class, array(
-                    'attr' => array('class' => 'form-submit turquoise medium')
-                )
-            );
+            ->add('Enregistrer', SubmitType::class);
     }
     
     /**

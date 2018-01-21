@@ -22,10 +22,7 @@ class ObjetType extends AbstractType
             ->add('nom', TextType::class)
             ->add('email', EmailType::class)
             ->add('langue', LangueType::class)
-            ->add('Enregistrer', SubmitType::class, array(
-                    'attr' => array('class' => 'form-submit turquoise medium')
-                )
-            );
+            ->add('Enregistrer', SubmitType::class);
     }
     
     /**

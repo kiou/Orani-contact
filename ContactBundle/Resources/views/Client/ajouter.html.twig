@@ -3,12 +3,25 @@
 {% block metaTitle %}{{ 'contact.client.metatitle'|trans }}{% endblock %}
 {% block metaDescription %}{{ 'contact.client.metadescription'|trans }}{% endblock %}
 
-{% block content %}
-
+{% block contentTitle %}
     <h1>{{ 'contact.client.title'|trans }}</h1>
+{% endblock %}
 
-    <div class="contactMap">
-        <p>La carte</p>
+{% block content %}
+    <div class="contactMap"></div>
+
+    <div class="contactAdresse">
+        <div class="contactAdresseCol">
+            <p><i class="fa fa-phone"></i> +(33)1 02 03 04 05</p>
+        </div>
+        <div class="contactAdresseCol">
+            <p><i class="fa fa-map-marker"></i> 1 rue André Real 38000 Grenoble</p>
+        </div>
+        <div class="contactAdresseCol">
+            <p><i class="fa fa-envelope"></i> contact@colocarts.com</p>
+        </div>
+
+        <div class="clear"></div>
     </div>
 
     {{ form_start(form, {'attr': {'class': 'form-horizontal', novalidate: 'novalidate'}}) }}
@@ -39,7 +52,10 @@
 
         <br>
 
-        {{ form_widget(form.Enregistrer, { 'label': 'contact.label.submit'|trans  }) }}
+        {{ form_widget(form.Enregistrer, {
+            'attr' : {'data-btn': 'contact.label.submit'|trans, 'class' : 'btn' },
+            'label' : 'contact.label.submit'|trans
+        }) }}
 
         {{ form_rest(form) }}
 
